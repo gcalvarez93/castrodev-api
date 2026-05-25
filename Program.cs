@@ -1,8 +1,28 @@
+// Path: /Users/gabrielcastro/api/Program.cs
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Api.Modules.Finance.Domain.Repositories;
+using Api.Modules.Finance.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Firebase Admin SDK
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.GetApplicationDefault()
+});
+
+// Firestore
+builder.Services.AddSingleton(_ =>
+    FirestoreDb.Create(builder.Configuration["Firebase:ProjectId"]));
+
+// Repositories
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+// Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

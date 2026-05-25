@@ -58,3 +58,15 @@
 /Users/gabrielcastro/api/obj/Debug/net10.0/api.csproj.AssemblyReference.cache
 /Users/gabrielcastro/api/obj/Debug/net10.0/api.MvcApplicationPartsAssemblyInfo.cs
 /Users/gabrielcastro/api/obj/Debug/net10.0/api.csproj.Up2Date
+/Users/gabrielcastro/api/obj/Debug/net10.0/api.sourcelink.json
+/Users/gabrielcastro/api/bin/Debug/net10.0/Google.Api.CommonProtos.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Google.Api.Gax.Grpc.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Google.Cloud.Firestore.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Google.Cloud.Firestore.V1.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Google.Cloud.Location.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Google.LongRunning.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Google.Protobuf.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Grpc.Auth.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Grpc.Core.Api.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Grpc.Net.Client.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Grpc.Net.Common.dll
