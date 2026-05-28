@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Api.Modules.Finance.Domain.Repositories;
 using Api.Modules.Finance.Infrastructure.Repositories;
+using Api.Modules.Finance.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ builder.Services.AddSingleton(_ =>
 
 // Repositories
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
 
 // Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -50,5 +53,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/health", () => Results.Ok("CastroDev API running")).AllowAnonymous();
+app.MapTransactionEndpoints();
+app.MapCategoryEndpoints();
+app.MapBudgetEndpoints();
 
 app.Run();
