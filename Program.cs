@@ -27,9 +27,12 @@ builder.Services.AddSingleton(_ =>
     FirestoreDb.Create(builder.Configuration["Firebase:ProjectId"]));
 
 // Repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
+builder.Services.AddScoped<IHabitRepository, HabitRepository>();
+builder.Services.AddScoped<IHabitCompletionRepository, HabitCompletionRepository>();
 
 // Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -50,12 +53,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
-builder.Services.AddScoped<IHabitRepository, HabitRepository>();
-builder.Services.AddScoped<IHabitCompletionRepository, HabitCompletionRepository>();
 
 var app = builder.Build();
 
