@@ -13,6 +13,9 @@ using Api.Modules.Finance.Presentation;
 using Api.Modules.Habits.Domain.Repositories;
 using Api.Modules.Habits.Infrastructure.Repositories;
 using Api.Modules.Habits.Presentation;
+using Api.Modules.Tasks.Domain.Repositories;
+using Api.Modules.Tasks.Infrastructure.Repositories;
+using Api.Modules.Tasks.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +36,9 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
 builder.Services.AddScoped<IHabitRepository, HabitRepository>();
 builder.Services.AddScoped<IHabitCompletionRepository, HabitCompletionRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IBoardRepository, BoardRepository>();
+builder.Services.AddScoped<ILabelRepository, LabelRepository>();
 
 // Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -67,6 +73,7 @@ app.MapTransactionEndpoints();
 app.MapCategoryEndpoints();
 app.MapBudgetEndpoints();
 app.MapHabitEndpoints();
+app.MapTaskEndpoints();
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 app.Run($"http://0.0.0.0:{port}");
