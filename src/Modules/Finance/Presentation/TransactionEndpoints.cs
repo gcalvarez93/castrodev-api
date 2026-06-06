@@ -2,6 +2,7 @@
 using Api.Modules.Finance.Application.DTOs;
 using Api.Modules.Finance.Application.UseCases.CreateTransaction;
 using Api.Modules.Finance.Application.UseCases.DeleteTransaction;
+using Api.Modules.Finance.Application.UseCases.ExportTransactions;
 using Api.Modules.Finance.Application.UseCases.GetBalance;
 using Api.Modules.Finance.Application.UseCases.GetTransactions;
 using MediatR;
@@ -60,6 +61,31 @@ public static class TransactionEndpoints
 
             await sender.Send(new DeleteTransactionCommand(userId, id));
             return Results.NoContent();
+        });
+
+        group.MapGet("/export/pdf", async (
+            string month,
+            string userName,
+            HttpContext context,
+            ISender sender) =>
+        {
+            var userId = context.User.FindFirst("user_id")?.Value;
+            if (userId is null) return Results.Unauthorized();
+
+            var bytes = await sender.Send(new ExportTransactionsPdfQuery(userId, userName, month));
+            return Results.File(bytes, "application/pdf", $"transacciones-{month}.pdf");
+        });
+
+        group.MapGet("/export/excel", async (
+            string month,
+            HttpContext context,
+            ISender sender) =>
+        {
+            var userId = context.User.FindFirst("user_id")?.Value;
+            if (userId is null) return Results.Unauthorized();
+
+            var bytes = await sender.Send(new ExportTransactionsExcelQuery(userId, month));
+            return Results.File(bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"transacciones-{month}.xlsx");
         });
     }
 }
