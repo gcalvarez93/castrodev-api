@@ -5,6 +5,7 @@ using Api.Modules.Finance.Application.UseCases.DeleteTransaction;
 using Api.Modules.Finance.Application.UseCases.ExportTransactions;
 using Api.Modules.Finance.Application.UseCases.GetBalance;
 using Api.Modules.Finance.Application.UseCases.GetTransactions;
+using Api.Modules.Finance.Application.UseCases.ScanReceipt;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -86,6 +87,25 @@ public static class TransactionEndpoints
 
             var bytes = await sender.Send(new ExportTransactionsExcelQuery(userId, month));
             return Results.File(bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"transacciones-{month}.xlsx");
+        });
+
+        group.MapPost("/scan", async (
+            HttpContext context,
+            ISender sender) =>
+        {
+            var userId = context.User.FindFirst("user_id")?.Value;
+            if (userId is null) return Results.Unauthorized();
+
+            var form = await context.Request.ReadFormAsync();
+            var file = form.Files.FirstOrDefault();
+            if (file is null) return Results.BadRequest("No se ha enviado ninguna imagen");
+
+            using var ms = new MemoryStream();
+            await file.CopyToAsync(ms);
+            var imageBytes = ms.ToArray();
+
+            var result = await sender.Send(new ScanReceiptCommand(imageBytes));
+            return Results.Ok(result);
         });
     }
 }

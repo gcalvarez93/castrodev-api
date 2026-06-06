@@ -13,6 +13,7 @@
           "FirebaseAdmin": "3.5.0",
           "FluentValidation.AspNetCore": "11.3.1",
           "Google.Cloud.Firestore": "4.2.0",
+          "Google.Cloud.Vision.V1": "3.8.0",
           "MediatR": "14.1.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.8",
           "Swashbuckle.AspNetCore": "10.1.7",
@@ -245,6 +246,18 @@
           "lib/netstandard2.0/Google.Cloud.Location.dll": {
             "assemblyVersion": "2.4.0.0",
             "fileVersion": "2.4.0.0"
+          }
+        }
+      },
+      "Google.Cloud.Vision.V1/3.8.0": {
+        "dependencies": {
+          "Google.Api.Gax.Grpc": "4.13.1",
+          "Google.LongRunning": "3.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Cloud.Vision.V1.dll": {
+            "assemblyVersion": "3.8.0.0",
+            "fileVersion": "3.8.0.0"
           }
         }
       },
@@ -757,6 +770,13 @@
       "sha512": "sha512-ZFChsp6OYVPBAzpoEWFMf/W9lfOgPj5BY+75/VjGV6EoirhA3YNlSKta3fX2MPaWH6RqJ9ZtNJT4vmdxhxbkbQ==",
       "path": "google.cloud.location/2.4.0",
       "hashPath": "google.cloud.location.2.4.0.nupkg.sha512"
+    },
+    "Google.Cloud.Vision.V1/3.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VHK9N9hL0y747yss00iG/04tRx2i85SLOxRX+FU4i6PlG88cAwzkW01cv3q8Zy6TnaJ6riNo/lrXO10UN6+AWw==",
+      "path": "google.cloud.vision.v1/3.8.0",
+      "hashPath": "google.cloud.vision.v1.3.8.0.nupkg.sha512"
     },
     "Google.LongRunning/3.5.0": {
       "type": "package",

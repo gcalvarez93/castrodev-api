@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZnRhDX/gI4E=",
+  "dgSpecHash": "CRaASFXDyeE=",
   "success": true,
   "projectFilePath": "/Users/gabrielcastro/api/api.csproj",
   "expectedPackageFiles": [
@@ -24,6 +24,7 @@
     "/Users/gabrielcastro/.nuget/packages/google.cloud.firestore/4.2.0/google.cloud.firestore.4.2.0.nupkg.sha512",
     "/Users/gabrielcastro/.nuget/packages/google.cloud.firestore.v1/4.2.0/google.cloud.firestore.v1.4.2.0.nupkg.sha512",
     "/Users/gabrielcastro/.nuget/packages/google.cloud.location/2.4.0/google.cloud.location.2.4.0.nupkg.sha512",
+    "/Users/gabrielcastro/.nuget/packages/google.cloud.vision.v1/3.8.0/google.cloud.vision.v1.3.8.0.nupkg.sha512",
     "/Users/gabrielcastro/.nuget/packages/google.longrunning/3.5.0/google.longrunning.3.5.0.nupkg.sha512",
     "/Users/gabrielcastro/.nuget/packages/google.protobuf/3.31.1/google.protobuf.3.31.1.nupkg.sha512",
     "/Users/gabrielcastro/.nuget/packages/grpc.auth/2.71.0/grpc.auth.2.71.0.nupkg.sha512",

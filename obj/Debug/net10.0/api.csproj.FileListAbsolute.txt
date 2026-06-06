@@ -92,3 +92,4 @@
 /Users/gabrielcastro/api/bin/Debug/net10.0/RBush.dll
 /Users/gabrielcastro/api/bin/Debug/net10.0/SixLabors.Fonts.dll
 /Users/gabrielcastro/api/bin/Debug/net10.0/System.IO.Packaging.dll
+/Users/gabrielcastro/api/bin/Debug/net10.0/Google.Cloud.Vision.V1.dll
