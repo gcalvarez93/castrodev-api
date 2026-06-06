@@ -4,6 +4,9 @@ using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Api.Common.Domain.Repositories;
+using Api.Common.Infrastructure.Repositories;
+using Api.Common.Presentation;
 using Api.Modules.Finance.Domain.Repositories;
 using Api.Modules.Finance.Infrastructure.Repositories;
 using Api.Modules.Finance.Presentation;
@@ -44,6 +47,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
@@ -53,6 +57,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/health", () => Results.Ok("CastroDev API running")).AllowAnonymous();
+app.MapUserEndpoints();
 app.MapTransactionEndpoints();
 app.MapCategoryEndpoints();
 app.MapBudgetEndpoints();
