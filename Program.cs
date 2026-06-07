@@ -29,7 +29,7 @@ FirebaseApp.Create(new AppOptions
 
 // Firestore
 builder.Services.AddSingleton(_ =>
-    FirestoreDb.Create(builder.Configuration["Firebase:ProjectId"]));
+    FirestoreDb.Create("castrodev-d3e1f"));
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
