@@ -7,7 +7,7 @@ namespace Api.Modules.Finance.Infrastructure.Repositories;
 
 public sealed class CategoryRepository(FirestoreDb db) : ICategoryRepository
 {
-    private CollectionReference Collection => db.Collection("categories");
+    private CollectionReference Collection => db.Collection("categories_financetracker");
 
     public async Task<Category?> GetByIdAsync(string id, string userId)
     {

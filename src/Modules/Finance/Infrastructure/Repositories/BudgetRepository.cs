@@ -7,7 +7,7 @@ namespace Api.Modules.Finance.Infrastructure.Repositories;
 
 public sealed class BudgetRepository(FirestoreDb db) : IBudgetRepository
 {
-    private CollectionReference Collection => db.Collection("budgets");
+    private CollectionReference Collection => db.Collection("budgets_financetracker");
 
     public async Task<Budget?> GetByIdAsync(string id, string userId)
     {

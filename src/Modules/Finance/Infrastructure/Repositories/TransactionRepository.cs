@@ -7,7 +7,7 @@ namespace Api.Modules.Finance.Infrastructure.Repositories;
 
 public sealed class TransactionRepository(FirestoreDb db) : ITransactionRepository
 {
-    private CollectionReference Collection => db.Collection("transactions");
+    private CollectionReference Collection => db.Collection("transactions_financetracker");
 
     public async Task<DomainTransaction?> GetByIdAsync(string id, string userId)
     {
