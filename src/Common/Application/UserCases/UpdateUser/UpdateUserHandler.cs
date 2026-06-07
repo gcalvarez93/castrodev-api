@@ -24,6 +24,10 @@ public sealed class UpdateUserHandler(
             PhotoUrl = request.Dto.PhotoUrl,
             Language = request.Dto.Language,
             Notifications = request.Dto.Notifications,
+            NotificationsGeneral = request.Dto.NotificationsGeneral,
+            NotificationsTransactions = request.Dto.NotificationsTransactions,
+            NotificationsBudgets = request.Dto.NotificationsBudgets,
+            NotificationsReports = request.Dto.NotificationsReports,
             CreatedAt = existing?.CreatedAt ?? DateTime.UtcNow
         };
 
@@ -39,6 +43,10 @@ public sealed class UpdateUserHandler(
             user.PhotoUrl,
             user.Language,
             user.Notifications,
+            user.NotificationsGeneral,
+            user.NotificationsTransactions,
+            user.NotificationsBudgets,
+            user.NotificationsReports,
             user.CreatedAt
         );
     }

@@ -8,5 +8,9 @@ public sealed record UserResponseDto(
     string PhotoUrl,
     string Language,
     bool Notifications,
+    bool NotificationsGeneral,
+    bool NotificationsTransactions,
+    bool NotificationsBudgets,
+    bool NotificationsReports,
     DateTime CreatedAt
 );

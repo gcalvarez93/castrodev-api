@@ -5,5 +5,9 @@ public sealed record UpdateUserDto(
     string Name,
     string PhotoUrl,
     string Language,
-    bool Notifications
+    bool Notifications,
+    bool NotificationsGeneral,
+    bool NotificationsTransactions,
+    bool NotificationsBudgets,
+    bool NotificationsReports
 );

@@ -23,6 +23,10 @@ public sealed class GetUserHandler(
             user.PhotoUrl,
             user.Language,
             user.Notifications,
+            user.NotificationsGeneral,
+            user.NotificationsTransactions,
+            user.NotificationsBudgets,
+            user.NotificationsReports,
             user.CreatedAt
         );
     }
