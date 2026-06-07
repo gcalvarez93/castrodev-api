@@ -3,6 +3,7 @@ using Api.Modules.Finance.Application.DTOs;
 using Api.Modules.Finance.Application.UseCases.CreateCategory;
 using Api.Modules.Finance.Application.UseCases.DeleteCategory;
 using Api.Modules.Finance.Application.UseCases.GetCategories;
+using Api.Modules.Finance.Application.UseCases.UpdateCategory;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,19 @@ public static class CategoryEndpoints
             if (userId is null) return Results.Unauthorized();
 
             var result = await sender.Send(new GetCategoriesQuery(userId));
+            return Results.Ok(result);
+        });
+
+        group.MapPut("/{id}", async (
+            string id,
+            [FromBody] CreateCategoryDto dto,
+            HttpContext context,
+            ISender sender) =>
+        {
+            var userId = context.User.FindFirst("user_id")?.Value;
+            if (userId is null) return Results.Unauthorized();
+
+            var result = await sender.Send(new UpdateCategoryCommand(userId, id, dto));
             return Results.Ok(result);
         });
 
