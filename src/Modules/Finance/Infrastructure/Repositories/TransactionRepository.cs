@@ -55,8 +55,8 @@ public sealed class TransactionRepository(FirestoreDb db) : ITransactionReposito
             Type = transaction.Type,
             CategoryId = transaction.CategoryId,
             Description = transaction.Description,
-            Date = transaction.Date,
-            CreatedAt = transaction.CreatedAt
+            Date = DateTime.SpecifyKind(transaction.Date, DateTimeKind.Utc),
+            CreatedAt = DateTime.SpecifyKind(transaction.CreatedAt, DateTimeKind.Utc)
         });
         return doc.Id;
     }
@@ -70,8 +70,8 @@ public sealed class TransactionRepository(FirestoreDb db) : ITransactionReposito
             Type = transaction.Type,
             CategoryId = transaction.CategoryId,
             Description = transaction.Description,
-            Date = transaction.Date,
-            CreatedAt = transaction.CreatedAt
+            Date = DateTime.SpecifyKind(transaction.Date, DateTimeKind.Utc),
+            CreatedAt = DateTime.SpecifyKind(transaction.CreatedAt, DateTimeKind.Utc)
         }, SetOptions.Overwrite);
     }
 
