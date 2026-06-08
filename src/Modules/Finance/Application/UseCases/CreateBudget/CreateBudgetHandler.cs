@@ -7,7 +7,8 @@ using MediatR;
 namespace Api.Modules.Finance.Application.UseCases.CreateBudget;
 
 public sealed class CreateBudgetHandler(
-    IBudgetRepository repository
+    IBudgetRepository budgetRepository,
+    ICategoryRepository categoryRepository
 ) : IRequestHandler<CreateBudgetCommand, BudgetResponseDto>
 {
     public async Task<BudgetResponseDto> Handle(
@@ -22,12 +23,18 @@ public sealed class CreateBudgetHandler(
             Month = request.Dto.Month
         };
 
-        var id = await repository.CreateAsync(budget);
+        var id = await budgetRepository.CreateAsync(budget);
+
+        var category = await categoryRepository.GetByIdAsync(
+            request.Dto.CategoryId, request.UserId);
 
         return new BudgetResponseDto(
             id,
             budget.CategoryId,
+            category?.Name ?? string.Empty,
+            category?.Icon ?? "💰",
             budget.Amount,
+            0,
             budget.Month,
             budget.CreatedAt
         );
