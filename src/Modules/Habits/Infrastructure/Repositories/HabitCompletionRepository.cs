@@ -7,7 +7,7 @@ namespace Api.Modules.Habits.Infrastructure.Repositories;
 
 public sealed class HabitCompletionRepository(FirestoreDb db) : IHabitCompletionRepository
 {
-    private CollectionReference Collection => db.Collection("completions_habitstracker");
+    private CollectionReference Collection => db.Collection("completions_habittracker");
 
     public async Task<IEnumerable<HabitCompletion>> GetByHabitIdAsync(string habitId, string userId)
     {
