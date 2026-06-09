@@ -7,7 +7,7 @@ namespace Api.Modules.Tasks.Infrastructure.Repositories;
 
 public sealed class BoardRepository(FirestoreDb db) : IBoardRepository
 {
-    private CollectionReference Collection => db.Collection("boards");
+    private CollectionReference Collection => db.Collection("boards_taskmanager");
 
     public async Task<Board?> GetByIdAsync(string id, string userId)
     {

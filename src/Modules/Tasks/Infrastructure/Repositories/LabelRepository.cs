@@ -7,7 +7,7 @@ namespace Api.Modules.Tasks.Infrastructure.Repositories;
 
 public sealed class LabelRepository(FirestoreDb db) : ILabelRepository
 {
-    private CollectionReference Collection => db.Collection("labels");
+    private CollectionReference Collection => db.Collection("labels_taskmanager");
 
     public async Task<IEnumerable<Label>> GetAllAsync(string userId)
     {

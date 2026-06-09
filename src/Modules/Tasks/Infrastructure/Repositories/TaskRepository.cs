@@ -7,7 +7,7 @@ namespace Api.Modules.Tasks.Infrastructure.Repositories;
 
 public sealed class TaskRepository(FirestoreDb db) : ITaskRepository
 {
-    private CollectionReference Collection => db.Collection("tasks");
+    private CollectionReference Collection => db.Collection("tasks_taskmanager");
 
     public async Task<TaskItem?> GetByIdAsync(string id, string userId)
     {
