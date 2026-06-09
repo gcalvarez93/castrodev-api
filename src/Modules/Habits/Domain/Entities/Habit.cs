@@ -6,9 +6,13 @@ public sealed class Habit
     public string Id { get; init; } = Guid.NewGuid().ToString();
     public string UserId { get; init; } = string.Empty;
     public string Name { get; init; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
     public string Icon { get; init; } = string.Empty;
     public string Color { get; init; } = string.Empty;
-    public string Frequency { get; init; } = "daily"; // daily | weekly
+    public string Frequency { get; init; } = "daily";
     public int Streak { get; init; } = 0;
+    public int BestStreak { get; init; } = 0;
+    public int TotalCompleted { get; init; } = 0;
+    public bool CompletedToday { get; init; } = false;
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
 }

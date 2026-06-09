@@ -7,4 +7,4 @@ namespace Api.Modules.Habits.Application.UseCases.CompleteHabit;
 public sealed record CompleteHabitCommand(
     string UserId,
     string HabitId
-) : IRequest<HabitCompletionResponseDto>;
+) : IRequest<HabitResponseDto>;

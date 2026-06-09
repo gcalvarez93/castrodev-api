@@ -3,6 +3,7 @@ namespace Api.Modules.Habits.Application.DTOs;
 
 public sealed record CreateHabitDto(
     string Name,
+    string Description,
     string Icon,
     string Color,
     string Frequency

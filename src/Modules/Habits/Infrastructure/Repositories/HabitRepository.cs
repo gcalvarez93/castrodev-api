@@ -37,10 +37,13 @@ public sealed class HabitRepository(FirestoreDb db) : IHabitRepository
         {
             UserId = habit.UserId,
             Name = habit.Name,
+            Description = habit.Description,
             Icon = habit.Icon,
             Color = habit.Color,
             Frequency = habit.Frequency,
             Streak = habit.Streak,
+            BestStreak = habit.BestStreak,
+            TotalCompleted = habit.TotalCompleted,
             CreatedAt = habit.CreatedAt
         });
         return doc.Id;
@@ -52,10 +55,13 @@ public sealed class HabitRepository(FirestoreDb db) : IHabitRepository
         {
             UserId = habit.UserId,
             Name = habit.Name,
+            Description = habit.Description,
             Icon = habit.Icon,
             Color = habit.Color,
             Frequency = habit.Frequency,
             Streak = habit.Streak,
+            BestStreak = habit.BestStreak,
+            TotalCompleted = habit.TotalCompleted,
             CreatedAt = habit.CreatedAt
         }, SetOptions.Overwrite);
     }
@@ -76,10 +82,13 @@ public sealed class HabitRepository(FirestoreDb db) : IHabitRepository
         Id = id,
         UserId = doc.UserId,
         Name = doc.Name,
+        Description = doc.Description,
         Icon = doc.Icon,
         Color = doc.Color,
         Frequency = doc.Frequency,
         Streak = doc.Streak,
+        BestStreak = doc.BestStreak,
+        TotalCompleted = doc.TotalCompleted,
         CreatedAt = doc.CreatedAt
     };
 }
@@ -87,11 +96,14 @@ public sealed class HabitRepository(FirestoreDb db) : IHabitRepository
 [FirestoreData]
 internal sealed class HabitDocument
 {
-    [FirestoreProperty("userId")]    public string UserId { get; set; } = string.Empty;
-    [FirestoreProperty("name")]      public string Name { get; set; } = string.Empty;
-    [FirestoreProperty("icon")]      public string Icon { get; set; } = string.Empty;
-    [FirestoreProperty("color")]     public string Color { get; set; } = string.Empty;
-    [FirestoreProperty("frequency")] public string Frequency { get; set; } = "daily";
-    [FirestoreProperty("streak")]    public int Streak { get; set; }
-    [FirestoreProperty("createdAt")] public DateTime CreatedAt { get; set; }
+    [FirestoreProperty("userId")]         public string UserId { get; set; } = string.Empty;
+    [FirestoreProperty("name")]           public string Name { get; set; } = string.Empty;
+    [FirestoreProperty("description")]    public string Description { get; set; } = string.Empty;
+    [FirestoreProperty("icon")]           public string Icon { get; set; } = string.Empty;
+    [FirestoreProperty("color")]          public string Color { get; set; } = string.Empty;
+    [FirestoreProperty("frequency")]      public string Frequency { get; set; } = "daily";
+    [FirestoreProperty("streak")]         public int Streak { get; set; }
+    [FirestoreProperty("bestStreak")]     public int BestStreak { get; set; }
+    [FirestoreProperty("totalCompleted")] public int TotalCompleted { get; set; }
+    [FirestoreProperty("createdAt")]      public DateTime CreatedAt { get; set; }
 }

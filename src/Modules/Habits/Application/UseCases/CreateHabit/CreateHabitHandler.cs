@@ -18,6 +18,7 @@ public sealed class CreateHabitHandler(
         {
             UserId = request.UserId,
             Name = request.Dto.Name,
+            Description = request.Dto.Description,
             Icon = request.Dto.Icon,
             Color = request.Dto.Color,
             Frequency = request.Dto.Frequency
@@ -28,10 +29,14 @@ public sealed class CreateHabitHandler(
         return new HabitResponseDto(
             id,
             habit.Name,
+            habit.Description,
             habit.Icon,
             habit.Color,
             habit.Frequency,
             habit.Streak,
+            habit.BestStreak,
+            habit.TotalCompleted,
+            false,
             habit.CreatedAt
         );
     }
