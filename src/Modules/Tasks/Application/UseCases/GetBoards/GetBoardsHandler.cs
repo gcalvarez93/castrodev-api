@@ -18,7 +18,9 @@ public sealed class GetBoardsHandler(
         return boards.Select(b => new BoardResponseDto(
             b.Id,
             b.Name,
+            b.Description,
             b.Color,
+            b.TaskCount,
             b.CreatedAt
         ));
     }

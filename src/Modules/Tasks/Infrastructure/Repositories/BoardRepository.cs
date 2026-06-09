@@ -8,6 +8,7 @@ namespace Api.Modules.Tasks.Infrastructure.Repositories;
 public sealed class BoardRepository(FirestoreDb db) : IBoardRepository
 {
     private CollectionReference Collection => db.Collection("boards_taskmanager");
+    private CollectionReference TasksCollection => db.Collection("tasks_taskmanager");
 
     public async Task<Board?> GetByIdAsync(string id, string userId)
     {
@@ -17,7 +18,8 @@ public sealed class BoardRepository(FirestoreDb db) : IBoardRepository
         var board = doc.ConvertTo<BoardDocument>();
         if (board.UserId != userId) return null;
 
-        return MapToDomain(doc.Id, board);
+        var taskCount = await GetTaskCountAsync(id, userId);
+        return MapToDomain(doc.Id, board, taskCount);
     }
 
     public async Task<IEnumerable<Board>> GetAllAsync(string userId)
@@ -27,7 +29,13 @@ public sealed class BoardRepository(FirestoreDb db) : IBoardRepository
             .OrderBy("name")
             .GetSnapshotAsync();
 
-        return query.Documents.Select(d => MapToDomain(d.Id, d.ConvertTo<BoardDocument>()));
+        var boards = new List<Board>();
+        foreach (var doc in query.Documents)
+        {
+            var taskCount = await GetTaskCountAsync(doc.Id, userId);
+            boards.Add(MapToDomain(doc.Id, doc.ConvertTo<BoardDocument>(), taskCount));
+        }
+        return boards;
     }
 
     public async Task<string> CreateAsync(Board board)
@@ -37,10 +45,23 @@ public sealed class BoardRepository(FirestoreDb db) : IBoardRepository
         {
             UserId = board.UserId,
             Name = board.Name,
+            Description = board.Description,
             Color = board.Color,
             CreatedAt = board.CreatedAt
         });
         return doc.Id;
+    }
+
+    public async Task UpdateAsync(Board board)
+    {
+        await Collection.Document(board.Id).SetAsync(new BoardDocument
+        {
+            UserId = board.UserId,
+            Name = board.Name,
+            Description = board.Description,
+            Color = board.Color,
+            CreatedAt = board.CreatedAt
+        }, SetOptions.Overwrite);
     }
 
     public async Task DeleteAsync(string id, string userId)
@@ -54,12 +75,23 @@ public sealed class BoardRepository(FirestoreDb db) : IBoardRepository
         await Collection.Document(id).DeleteAsync();
     }
 
-    private static Board MapToDomain(string id, BoardDocument doc) => new()
+    private async Task<int> GetTaskCountAsync(string boardId, string userId)
+    {
+        var query = await TasksCollection
+            .WhereEqualTo("userId", userId)
+            .WhereEqualTo("boardId", boardId)
+            .GetSnapshotAsync();
+        return query.Count;
+    }
+
+    private static Board MapToDomain(string id, BoardDocument doc, int taskCount = 0) => new()
     {
         Id = id,
         UserId = doc.UserId,
         Name = doc.Name,
+        Description = doc.Description,
         Color = doc.Color,
+        TaskCount = taskCount,
         CreatedAt = doc.CreatedAt
     };
 }
@@ -67,8 +99,9 @@ public sealed class BoardRepository(FirestoreDb db) : IBoardRepository
 [FirestoreData]
 internal sealed class BoardDocument
 {
-    [FirestoreProperty("userId")]    public string UserId { get; set; } = string.Empty;
-    [FirestoreProperty("name")]      public string Name { get; set; } = string.Empty;
-    [FirestoreProperty("color")]     public string Color { get; set; } = string.Empty;
-    [FirestoreProperty("createdAt")] public DateTime CreatedAt { get; set; }
+    [FirestoreProperty("userId")]      public string UserId { get; set; } = string.Empty;
+    [FirestoreProperty("name")]        public string Name { get; set; } = string.Empty;
+    [FirestoreProperty("description")] public string Description { get; set; } = string.Empty;
+    [FirestoreProperty("color")]       public string Color { get; set; } = string.Empty;
+    [FirestoreProperty("createdAt")]   public DateTime CreatedAt { get; set; }
 }

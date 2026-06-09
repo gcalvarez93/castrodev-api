@@ -18,6 +18,7 @@ public sealed class CreateBoardHandler(
         {
             UserId = request.UserId,
             Name = request.Dto.Name,
+            Description = request.Dto.Description,
             Color = request.Dto.Color
         };
 
@@ -26,7 +27,9 @@ public sealed class CreateBoardHandler(
         return new BoardResponseDto(
             id,
             board.Name,
+            board.Description,
             board.Color,
+            0,
             board.CreatedAt
         );
     }
