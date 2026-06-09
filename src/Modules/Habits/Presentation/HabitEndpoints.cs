@@ -60,7 +60,7 @@ public static class HabitEndpoints
             if (userId is null) return Results.Unauthorized();
 
             var result = await sender.Send(new CompleteHabitCommand(userId, id));
-            return Results.Created($"/api/habits/{id}/completions/{result.Id}", result);
+            return Results.Ok(result);
         });
     }
 }
