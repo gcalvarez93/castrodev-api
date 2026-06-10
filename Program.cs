@@ -18,7 +18,10 @@ using Api.Modules.Habits.Presentation;
 using Api.Modules.Tasks.Domain.Repositories;
 using Api.Modules.Tasks.Infrastructure.Repositories;
 using Api.Modules.Tasks.Presentation;
-
+using Api.Modules.BudgetScanner.Domain.Repositories;
+using Api.Modules.BudgetScanner.Infrastructure.Repositories;
+using Api.Modules.BudgetScanner.Presentation;
+ 
 var builder = WebApplication.CreateBuilder(args);
 
 // Firebase Admin SDK
@@ -44,6 +47,8 @@ builder.Services.AddScoped<IHabitCompletionRepository, HabitCompletionRepository
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IBoardRepository, BoardRepository>();
 builder.Services.AddScoped<ILabelRepository, LabelRepository>();
+builder.Services.AddScoped<IScannerBudgetRepository, ScannerBudgetRepository>();
+builder.Services.AddScoped<IScannerTransactionRepository, ScannerTransactionRepository>();
 
 // Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -79,6 +84,7 @@ app.MapCategoryEndpoints();
 app.MapBudgetEndpoints();
 app.MapHabitEndpoints();
 app.MapTaskEndpoints();
+app.MapBudgetScannerEndpoints();
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 app.Run($"http://0.0.0.0:{port}");
