@@ -9,5 +9,6 @@ public sealed record TaskResponseDto(
     string Status,
     string Priority,
     DateTime? DueDate,
+    List<string> Labels,
     DateTime CreatedAt
 );

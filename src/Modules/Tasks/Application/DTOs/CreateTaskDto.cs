@@ -6,5 +6,7 @@ public sealed record CreateTaskDto(
     string Title,
     string Description,
     string Priority,
-    DateTime? DueDate
+    string Status,
+    DateTime? DueDate,
+    List<string> Labels
 );

@@ -21,7 +21,9 @@ public sealed class CreateTaskHandler(
             Title = request.Dto.Title,
             Description = request.Dto.Description,
             Priority = request.Dto.Priority,
-            DueDate = request.Dto.DueDate
+            Status = request.Dto.Status,
+            DueDate = request.Dto.DueDate,
+            Labels = request.Dto.Labels
         };
 
         var id = await repository.CreateAsync(task);
@@ -34,6 +36,7 @@ public sealed class CreateTaskHandler(
             task.Status,
             task.Priority,
             task.DueDate,
+            task.Labels,
             task.CreatedAt
         );
     }

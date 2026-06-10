@@ -25,6 +25,7 @@ public sealed class GetTasksHandler(
             t.Status,
             t.Priority,
             t.DueDate,
+            t.Labels,
             t.CreatedAt
         ));
     }

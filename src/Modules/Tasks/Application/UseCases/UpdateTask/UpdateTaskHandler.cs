@@ -27,6 +27,7 @@ public sealed class UpdateTaskHandler(
             Status = request.Dto.Status,
             Priority = request.Dto.Priority,
             DueDate = request.Dto.DueDate,
+            Labels = request.Dto.Labels,
             CreatedAt = existing.CreatedAt
         };
 
@@ -40,6 +41,7 @@ public sealed class UpdateTaskHandler(
             task.Status,
             task.Priority,
             task.DueDate,
+            task.Labels,
             task.CreatedAt
         );
     }

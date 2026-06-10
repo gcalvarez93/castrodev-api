@@ -53,6 +53,7 @@ public sealed class TaskRepository(FirestoreDb db) : ITaskRepository
             Status = task.Status,
             Priority = task.Priority,
             DueDate = task.DueDate,
+            Labels = task.Labels,
             CreatedAt = task.CreatedAt
         });
         return doc.Id;
@@ -69,6 +70,7 @@ public sealed class TaskRepository(FirestoreDb db) : ITaskRepository
             Status = task.Status,
             Priority = task.Priority,
             DueDate = task.DueDate,
+            Labels = task.Labels,
             CreatedAt = task.CreatedAt
         }, SetOptions.Overwrite);
     }
@@ -94,6 +96,7 @@ public sealed class TaskRepository(FirestoreDb db) : ITaskRepository
         Status = doc.Status,
         Priority = doc.Priority,
         DueDate = doc.DueDate,
+        Labels = doc.Labels,
         CreatedAt = doc.CreatedAt
     };
 }
@@ -105,8 +108,9 @@ internal sealed class TaskDocument
     [FirestoreProperty("boardId")]     public string BoardId { get; set; } = string.Empty;
     [FirestoreProperty("title")]       public string Title { get; set; } = string.Empty;
     [FirestoreProperty("description")] public string Description { get; set; } = string.Empty;
-    [FirestoreProperty("status")]      public string Status { get; set; } = "pending";
+    [FirestoreProperty("status")]      public string Status { get; set; } = "todo";
     [FirestoreProperty("priority")]    public string Priority { get; set; } = "medium";
     [FirestoreProperty("dueDate")]     public DateTime? DueDate { get; set; }
+    [FirestoreProperty("labels")]      public List<string> Labels { get; set; } = new();
     [FirestoreProperty("createdAt")]   public DateTime CreatedAt { get; set; }
 }

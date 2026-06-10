@@ -6,5 +6,6 @@ public sealed record UpdateTaskDto(
     string Description,
     string Status,
     string Priority,
-    DateTime? DueDate
+    DateTime? DueDate,
+    List<string> Labels
 );

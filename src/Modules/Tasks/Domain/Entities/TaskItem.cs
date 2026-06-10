@@ -8,8 +8,9 @@ public sealed class TaskItem
     public string BoardId { get; init; } = string.Empty;
     public string Title { get; init; } = string.Empty;
     public string Description { get; init; } = string.Empty;
-    public string Status { get; init; } = "pending"; // pending | in_progress | done
+    public string Status { get; init; } = "todo"; // todo | inProgress | done
     public string Priority { get; init; } = "medium"; // low | medium | high
     public DateTime? DueDate { get; init; }
+    public List<string> Labels { get; init; } = new();
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
 }
