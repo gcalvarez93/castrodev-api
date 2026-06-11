@@ -21,7 +21,10 @@ using Api.Modules.Tasks.Presentation;
 using Api.Modules.BudgetScanner.Domain.Repositories;
 using Api.Modules.BudgetScanner.Infrastructure.Repositories;
 using Api.Modules.BudgetScanner.Presentation;
- 
+using Api.Modules.RecipeManager.Domain.Repositories;
+using Api.Modules.RecipeManager.Infrastructure.Repositories;
+using Api.Modules.RecipeManager.Presentation;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Firebase Admin SDK
@@ -33,6 +36,12 @@ FirebaseApp.Create(new AppOptions
 // Firestore
 builder.Services.AddSingleton(_ =>
     FirestoreDb.Create("castrodev-d3e1f"));
+
+// HttpClient
+builder.Services.AddHttpClient("TheMealDB", client =>
+{
+    client.BaseAddress = new Uri("https://www.themealdb.com/api/json/v1/1/");
+});
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -49,6 +58,9 @@ builder.Services.AddScoped<IBoardRepository, BoardRepository>();
 builder.Services.AddScoped<ILabelRepository, LabelRepository>();
 builder.Services.AddScoped<IScannerBudgetRepository, ScannerBudgetRepository>();
 builder.Services.AddScoped<IScannerTransactionRepository, ScannerTransactionRepository>();
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+builder.Services.AddScoped<IMealPlanRepository, MealPlanRepository>();
+builder.Services.AddScoped<IShoppingListRepository, ShoppingListRepository>();
 
 // Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -85,6 +97,7 @@ app.MapBudgetEndpoints();
 app.MapHabitEndpoints();
 app.MapTaskEndpoints();
 app.MapBudgetScannerEndpoints();
+app.MapRecipeEndpoints();
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 app.Run($"http://0.0.0.0:{port}");
