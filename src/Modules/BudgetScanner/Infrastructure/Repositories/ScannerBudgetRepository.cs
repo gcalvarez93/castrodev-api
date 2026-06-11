@@ -60,7 +60,7 @@ public sealed class ScannerBudgetRepository(FirestoreDb db) : IScannerBudgetRepo
 
         var batch = db.StartBatch();
         foreach (var doc in snapshot.Documents)
-            batch.Update(doc.Reference, new Dictionary<string, object> { ["spent"] = 0m });
+            batch.Update(doc.Reference, new Dictionary<string, object> { ["spent"] = 0.0 });
 
         await batch.CommitAsync();
     }
@@ -71,7 +71,7 @@ public sealed class ScannerBudgetRepository(FirestoreDb db) : IScannerBudgetRepo
         UserId         = doc.UserId,
         Name           = doc.Name,
         Category       = doc.Category,
-        Limit          = doc.Limit,
+        Limit          = (decimal)doc.Limit,
         Color          = doc.Color,
         Currency       = doc.Currency,
         IsRecurring    = doc.IsRecurring,
@@ -84,7 +84,7 @@ public sealed class ScannerBudgetRepository(FirestoreDb db) : IScannerBudgetRepo
         UserId         = b.UserId,
         Name           = b.Name,
         Category       = b.Category,
-        Limit          = b.Limit,
+        Limit          = (double)b.Limit,
         Color          = b.Color,
         Currency       = b.Currency,
         IsRecurring    = b.IsRecurring,
@@ -99,7 +99,7 @@ internal sealed class ScannerBudgetDocument
     [FirestoreProperty("userId")]         public string UserId { get; set; } = string.Empty;
     [FirestoreProperty("name")]           public string Name { get; set; } = string.Empty;
     [FirestoreProperty("category")]       public string Category { get; set; } = string.Empty;
-    [FirestoreProperty("limit")]          public decimal Limit { get; set; }
+    [FirestoreProperty("limit")]          public double Limit { get; set; }
     [FirestoreProperty("color")]          public string Color { get; set; } = string.Empty;
     [FirestoreProperty("currency")]       public string Currency { get; set; } = "EUR";
     [FirestoreProperty("isRecurring")]    public bool IsRecurring { get; set; }

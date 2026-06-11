@@ -74,7 +74,7 @@ public sealed class ScannerTransactionRepository(FirestoreDb db) : IScannerTrans
             .WhereLessThanOrEqualTo("date", to)
             .GetSnapshotAsync();
 
-        return snapshot.Documents
+        return (decimal)snapshot.Documents
             .Sum(d => d.ConvertTo<ScannerTransactionDocument>().Amount);
     }
 
@@ -105,7 +105,7 @@ public sealed class ScannerTransactionRepository(FirestoreDb db) : IScannerTrans
         UserId          = doc.UserId,
         BudgetId        = doc.BudgetId,
         Category        = doc.Category,
-        Amount          = doc.Amount,
+        Amount          = (decimal)doc.Amount,
         Currency        = doc.Currency,
         Description     = doc.Description,
         Notes           = doc.Notes,
@@ -122,7 +122,7 @@ public sealed class ScannerTransactionRepository(FirestoreDb db) : IScannerTrans
         UserId          = t.UserId,
         BudgetId        = t.BudgetId,
         Category        = t.Category,
-        Amount          = t.Amount,
+        Amount          = (double)t.Amount,
         Currency        = t.Currency,
         Description     = t.Description,
         Notes           = t.Notes,
@@ -141,7 +141,7 @@ internal sealed class ScannerTransactionDocument
     [FirestoreProperty("userId")]          public string UserId { get; set; } = string.Empty;
     [FirestoreProperty("budgetId")]        public string BudgetId { get; set; } = string.Empty;
     [FirestoreProperty("category")]        public string Category { get; set; } = string.Empty;
-    [FirestoreProperty("amount")]          public decimal Amount { get; set; }
+    [FirestoreProperty("amount")]          public double Amount { get; set; }
     [FirestoreProperty("currency")]        public string Currency { get; set; } = "EUR";
     [FirestoreProperty("description")]     public string Description { get; set; } = string.Empty;
     [FirestoreProperty("notes")]           public string Notes { get; set; } = string.Empty;
