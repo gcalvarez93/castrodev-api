@@ -1,0 +1,32 @@
+// Path: src/Modules/WorkoutTracker/Application/UseCases/AddExercise/AddExerciseHandler.cs
+using ErrorOr; using MediatR;
+using Api.Modules.WorkoutTracker.Domain.Entities;
+using Api.Modules.WorkoutTracker.Domain.Repositories;
+namespace Api.Modules.WorkoutTracker.Application.UseCases.AddExercise;
+public sealed class AddExerciseHandler(IRoutineRepository repository)
+    : IRequestHandler<AddExerciseCommand, ErrorOr<Updated>>
+{
+    public async Task<ErrorOr<Updated>> Handle(AddExerciseCommand request, CancellationToken ct)
+    {
+        var routine = await repository.GetByIdAsync(request.RoutineId, request.UserId);
+        if (routine is null) return Error.NotFound("Routine.NotFound", "Routine not found.");
+
+        var exercises = routine.Exercises.ToList();
+        exercises.Add(new Exercise {
+            Id = Guid.NewGuid().ToString(), Name = request.Exercise.Name,
+            MuscleGroup = request.Exercise.MuscleGroup, Equipment = request.Exercise.Equipment,
+            Sets = request.Exercise.Sets, Reps = request.Exercise.Reps,
+            WeightKg = request.Exercise.WeightKg, RestSeconds = request.Exercise.RestSeconds,
+            Notes = request.Exercise.Notes, IsImported = false
+        });
+
+        var updated = new Routine
+        {
+            Id = routine.Id, UserId = routine.UserId, Name = routine.Name,
+            Description = routine.Description, Category = routine.Category,
+            DaysOfWeek = routine.DaysOfWeek, Exercises = exercises, CreatedAt = routine.CreatedAt
+        };
+        await repository.UpdateAsync(updated);
+        return Result.Updated;
+    }
+}

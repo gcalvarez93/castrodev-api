@@ -24,6 +24,9 @@ using Api.Modules.BudgetScanner.Presentation;
 using Api.Modules.RecipeManager.Domain.Repositories;
 using Api.Modules.RecipeManager.Infrastructure.Repositories;
 using Api.Modules.RecipeManager.Presentation;
+using Api.Modules.WorkoutTracker.Domain.Repositories;
+using Api.Modules.WorkoutTracker.Infrastructure.Repositories;
+using Api.Modules.WorkoutTracker.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,10 +40,14 @@ FirebaseApp.Create(new AppOptions
 builder.Services.AddSingleton(_ =>
     FirestoreDb.Create("castrodev-d3e1f"));
 
-// HttpClient
+// HttpClients
 builder.Services.AddHttpClient("TheMealDB", client =>
 {
     client.BaseAddress = new Uri("https://www.themealdb.com/api/json/v1/1/");
+});
+builder.Services.AddHttpClient("Wger", client =>
+{
+    client.BaseAddress = new Uri("https://wger.de/api/v2/");
 });
 
 // Repositories
@@ -61,6 +68,9 @@ builder.Services.AddScoped<IScannerTransactionRepository, ScannerTransactionRepo
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IMealPlanRepository, MealPlanRepository>();
 builder.Services.AddScoped<IShoppingListRepository, ShoppingListRepository>();
+builder.Services.AddScoped<IRoutineRepository, RoutineRepository>();
+builder.Services.AddScoped<IWorkoutSessionRepository, WorkoutSessionRepository>();
+builder.Services.AddScoped<IBodyWeightRepository, BodyWeightRepository>();
 
 // Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -98,6 +108,7 @@ app.MapHabitEndpoints();
 app.MapTaskEndpoints();
 app.MapBudgetScannerEndpoints();
 app.MapRecipeEndpoints();
+app.MapWorkoutEndpoints();
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 app.Run($"http://0.0.0.0:{port}");
