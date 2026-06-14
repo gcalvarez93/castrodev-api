@@ -39,10 +39,12 @@ public sealed class WorkoutSessionRepository(FirestoreDb db) : IWorkoutSessionRe
 
     public async Task<IEnumerable<WorkoutSession>> GetByDateRangeAsync(string userId, DateTime from, DateTime to)
     {
+        var utcFrom = DateTime.SpecifyKind(from, DateTimeKind.Utc);
+        var utcTo   = DateTime.SpecifyKind(to,   DateTimeKind.Utc);
         var snapshot = await Collection
             .WhereEqualTo("userId", userId)
-            .WhereGreaterThanOrEqualTo("startedAt", from)
-            .WhereLessThanOrEqualTo("startedAt", to)
+            .WhereGreaterThanOrEqualTo("startedAt", utcFrom)
+            .WhereLessThanOrEqualTo("startedAt", utcTo)
             .GetSnapshotAsync();
         return snapshot.Documents.Select(d => MapToDomain(d.Id, d.ConvertTo<SessionDocument>()));
     }
