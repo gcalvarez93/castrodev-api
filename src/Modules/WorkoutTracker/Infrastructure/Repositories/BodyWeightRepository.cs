@@ -19,8 +19,11 @@ public sealed class BodyWeightRepository(FirestoreDb db) : IBodyWeightRepository
     {
         var doc = Collection.Document();
         await doc.SetAsync(new BodyWeightDocument {
-            UserId = entry.UserId, WeightKg = entry.WeightKg,
-            Date = entry.Date, Notes = entry.Notes, CreatedAt = entry.CreatedAt
+            UserId    = entry.UserId,
+            WeightKg  = entry.WeightKg,
+            Date      = DateTime.SpecifyKind(entry.Date, DateTimeKind.Utc),
+            Notes     = entry.Notes,
+            CreatedAt = DateTime.SpecifyKind(entry.CreatedAt, DateTimeKind.Utc)
         });
         return doc.Id;
     }
