@@ -46,7 +46,7 @@
           "dependencies": {
             "ClosedXML": {
               "target": "Package",
-              "version": "[0.105.0, )"
+              "version": "[0.105.1, )"
             },
             "ErrorOr": {
               "target": "Package",
@@ -54,7 +54,7 @@
             },
             "FirebaseAdmin": {
               "target": "Package",
-              "version": "[3.5.0, )"
+              "version": "[3.6.0, )"
             },
             "FluentValidation.AspNetCore": {
               "target": "Package",
@@ -62,7 +62,7 @@
             },
             "Google.Cloud.Firestore": {
               "target": "Package",
-              "version": "[4.2.0, )"
+              "version": "[4.4.0, )"
             },
             "Google.Cloud.Vision.V1": {
               "target": "Package",
@@ -70,19 +70,23 @@
             },
             "MediatR": {
               "target": "Package",
-              "version": "[14.1.0, )"
+              "version": "[14.2.0, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[10.0.8, )"
+              "version": "[10.0.12, )"
+            },
+            "Microsoft.OpenApi": {
+              "target": "Package",
+              "version": "[2.7.5, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[10.1.7, )"
+              "version": "[10.2.0, )"
             },
             "itext7": {
               "target": "Package",
-              "version": "[9.6.0, )"
+              "version": "[9.7.0, )"
             }
           },
           "imports": [
