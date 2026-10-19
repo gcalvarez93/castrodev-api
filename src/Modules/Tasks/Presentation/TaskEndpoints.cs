@@ -57,7 +57,7 @@ public static class TaskEndpoints
             if (userId is null) return Results.Unauthorized();
 
             var result = await sender.Send(new UpdateTaskCommand(userId, id, dto));
-            return Results.Ok(result);
+            return result.Match(Results.Ok, _ => Results.NotFound());
         });
 
         tasksGroup.MapDelete("/{id}", async (

@@ -2,20 +2,21 @@
 using Api.Modules.Tasks.Application.DTOs;
 using Api.Modules.Tasks.Domain.Entities;
 using Api.Modules.Tasks.Domain.Repositories;
+using ErrorOr;
 using MediatR;
 
 namespace Api.Modules.Tasks.Application.UseCases.UpdateTask;
 
 public sealed class UpdateTaskHandler(
     ITaskRepository repository
-) : IRequestHandler<UpdateTaskCommand, TaskResponseDto>
+) : IRequestHandler<UpdateTaskCommand, ErrorOr<TaskResponseDto>>
 {
-    public async Task<TaskResponseDto> Handle(
+    public async Task<ErrorOr<TaskResponseDto>> Handle(
         UpdateTaskCommand request,
         CancellationToken cancellationToken)
     {
         var existing = await repository.GetByIdAsync(request.Id, request.UserId);
-        if (existing is null) throw new KeyNotFoundException();
+        if (existing is null) return Error.NotFound("Task.NotFound", "Task not found.");
 
         var task = new TaskItem
         {

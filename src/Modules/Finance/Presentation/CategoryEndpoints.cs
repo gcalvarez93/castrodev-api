@@ -49,7 +49,7 @@ public static class CategoryEndpoints
             if (userId is null) return Results.Unauthorized();
 
             var result = await sender.Send(new UpdateCategoryCommand(userId, id, dto));
-            return Results.Ok(result);
+            return result.Match(Results.Ok, _ => Results.NotFound());
         });
 
         group.MapDelete("/{id}", async (

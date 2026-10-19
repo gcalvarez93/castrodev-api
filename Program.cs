@@ -1,4 +1,4 @@
-// Path: /Users/gabrielcastro/api/Program.cs
+// Path: Program.cs
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Firestore;
@@ -38,7 +38,8 @@ FirebaseApp.Create(new AppOptions
 
 // Firestore
 builder.Services.AddSingleton(_ =>
-    FirestoreDb.Create("castrodev-d3e1f"));
+    FirestoreDb.Create(builder.Configuration["Firebase:ProjectId"]
+        ?? throw new InvalidOperationException("Firebase:ProjectId is not configured.")));
 
 // HttpClients
 builder.Services.AddHttpClient("TheMealDB", client =>

@@ -1,0 +1,34 @@
+# Build output
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+publish/
+*.dll
+*.pdb
+
+# Test results
+TestResults/
+*.trx
+coverage/
+
+# IDEs
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.DotSettings.user
+
+# macOS
+.DS_Store
+
+# Secrets and local config
+appsettings.Local.json
+appsettings.Production.json
+*.pfx
+*.p12
+.env
+.env.*
+*serviceAccount*.json
+*-firebase-adminsdk-*.json

@@ -2,20 +2,21 @@
 using Api.Modules.Finance.Application.DTOs;
 using Api.Modules.Finance.Domain.Entities;
 using Api.Modules.Finance.Domain.Repositories;
+using ErrorOr;
 using MediatR;
 
 namespace Api.Modules.Finance.Application.UseCases.UpdateCategory;
 
 public sealed class UpdateCategoryHandler(
     ICategoryRepository repository
-) : IRequestHandler<UpdateCategoryCommand, CategoryResponseDto>
+) : IRequestHandler<UpdateCategoryCommand, ErrorOr<CategoryResponseDto>>
 {
-    public async Task<CategoryResponseDto> Handle(
+    public async Task<ErrorOr<CategoryResponseDto>> Handle(
         UpdateCategoryCommand request,
         CancellationToken cancellationToken)
     {
         var existing = await repository.GetByIdAsync(request.Id, request.UserId);
-        if (existing is null) throw new KeyNotFoundException();
+        if (existing is null) return Error.NotFound("Category.NotFound", "Category not found.");
 
         var category = new Category
         {

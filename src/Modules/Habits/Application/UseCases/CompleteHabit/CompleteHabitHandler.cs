@@ -2,6 +2,7 @@
 using Api.Modules.Habits.Application.DTOs;
 using Api.Modules.Habits.Domain.Entities;
 using Api.Modules.Habits.Domain.Repositories;
+using ErrorOr;
 using MediatR;
 
 namespace Api.Modules.Habits.Application.UseCases.CompleteHabit;
@@ -9,14 +10,14 @@ namespace Api.Modules.Habits.Application.UseCases.CompleteHabit;
 public sealed class CompleteHabitHandler(
     IHabitRepository habitRepository,
     IHabitCompletionRepository completionRepository
-) : IRequestHandler<CompleteHabitCommand, HabitResponseDto>
+) : IRequestHandler<CompleteHabitCommand, ErrorOr<HabitResponseDto>>
 {
-    public async Task<HabitResponseDto> Handle(
+    public async Task<ErrorOr<HabitResponseDto>> Handle(
         CompleteHabitCommand request,
         CancellationToken cancellationToken)
     {
-        var habit = await habitRepository.GetByIdAsync(request.HabitId, request.UserId)
-            ?? throw new Exception("Habit not found");
+        var habit = await habitRepository.GetByIdAsync(request.HabitId, request.UserId);
+        if (habit is null) return Error.NotFound("Habit.NotFound", "Habit not found.");
 
         // Registrar completion
         var completion = new HabitCompletion
@@ -27,9 +28,6 @@ public sealed class CompleteHabitHandler(
         await completionRepository.CreateAsync(completion);
 
         // Calcular nueva racha y totales
-        var allCompletions = await completionRepository.GetByHabitIdAsync(
-            request.HabitId, request.UserId);
-
         var newStreak = habit.Streak + 1;
         var newBestStreak = Math.Max(habit.BestStreak, newStreak);
         var newTotalCompleted = habit.TotalCompleted + 1;
